@@ -14,9 +14,10 @@ node {
     }
     stage('Build'){
          sh "${mvn} package -DskipTests"
+
     }
     stage('release'){
-             sh "${mvn} package -DskipTests"
+          archiveArtifacts artifacts: 'target/*.jar'
     }
 }
 
