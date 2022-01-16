@@ -9,15 +9,20 @@ node {
         sh "${mvn} --version"
     }
     stage('Test unitaire'){
-         sh "${mvn} test"
-         junit 'target/surefire-reports/*.xml'
+        steps {
+            sh "${mvn} test"
+        }
     }
     stage('Build'){
-         sh "${mvn} package -DskipTests"
-
+        steps {
+            sh "${mvn} package -DskipTests"
+        }
     }
-    stage('release'){
-          archiveArtifacts artifacts: 'target/*.jar'
+    post {
+        always {
+           archiveArtifacts artifacts: 'target/*.jar'
+           junit 'target/surefire-reports/*.xml'
+        }
     }
 }
 
