@@ -5,17 +5,19 @@ node {
         def maven_home = tool 'maven'
         mvn = "${maven_home}/bin/mvn"
     }
-    stage('Get maven version'){
-        sh "${mvn} --version"
-    }
-    stage('Test unitaire'){
-        steps {
-            sh "${mvn} test"
+    stages {
+        stage('Get maven version'){
+            sh "${mvn} --version"
         }
-    }
-    stage('Build'){
-        steps {
-            sh "${mvn} package -DskipTests"
+        stage('Test unitaire'){
+            steps {
+                sh "${mvn} test"
+            }
+        }
+        stage('Build'){
+            steps {
+                sh "${mvn} package -DskipTests"
+            }
         }
     }
     post {
