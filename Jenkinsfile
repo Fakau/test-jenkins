@@ -5,25 +5,24 @@ node {
         def maven_home = tool 'maven'
         mvn = "${maven_home}/bin/mvn"
     }
-    stages {
-        stage('Get maven version'){
-            sh "${mvn} --version"
+    stage('Get maven version'){
+        sh "${mvn} --version"
+    }
+    stage('Test unitaire'){
+        steps {
+            sh "${mvn} test"
         }
-        stage('Test unitaire'){
-            steps {
-                sh "${mvn} test"
-            }
-        }
-        stage('Build'){
-            steps {
-                sh "${mvn} package -DskipTests"
+        post {
+            always {
+                junit 'target/surefire-reports/*.xml'
             }
         }
     }
-    post {
-        always {
-           archiveArtifacts artifacts: 'target/*.jar'
-           junit 'target/surefire-reports/*.xml'
+    stage('Build'){
+         post {
+            always {
+                 archiveArtifacts artifacts: 'target/*.jar'
+         }
         }
     }
 }
