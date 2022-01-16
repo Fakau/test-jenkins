@@ -8,18 +8,22 @@ node {
     stage('Get maven version'){
         sh "${mvn} --version"
     }
-    stage('Test'){
+    stage('Test unitaire'){
          sh "${mvn} test"
+         junit 'target/surefire-reports/*.xml'
     }
     stage('Build'){
          sh "${mvn} package -DskipTests"
     }
+    stage('release'){
+             sh "${mvn} package -DskipTests"
+    }
 }
 
 
-/*
+
 //declarative
-pipeline{
+/*pipeline{
     agent any
     tools{
         maven 'maven'
@@ -28,6 +32,16 @@ pipeline{
         stage('Get maven version') {
             steps {
                 sh 'mvn --version'
+            }
+        }
+        stage('Test unitaire) {
+            steps {
+              sh 'mvn test'
+            }
+        }
+        stage('Package') {
+            steps {
+              sh 'mvn package -DskipTests'
             }
         }
     }
