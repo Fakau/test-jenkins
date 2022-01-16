@@ -5,8 +5,8 @@ node {
         def maven_home = tool 'maven'
         mvn = "${maven_home}"/bin/mvn
     }
-    stage('Get version'){
-        sh "${'Get Tools'} --version"
+    stage('Get maven version'){
+        sh "${mvn} --version"
     }
 }
 
