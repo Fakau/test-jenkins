@@ -8,7 +8,11 @@ node {
     stage('Get maven version'){
         sh "${mvn} --version"
     }
+    stage('Test'){
+            sh "${mvn} test"
+    }
 }
+
 
 /*
 //declarative
