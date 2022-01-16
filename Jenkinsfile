@@ -9,7 +9,10 @@ node {
         sh "${mvn} --version"
     }
     stage('Test'){
-            sh "${mvn} test"
+         sh "${mvn} test"
+    }
+    stage('Build'){
+         sh "${mvn} package -DskipTests"
     }
 }
 
